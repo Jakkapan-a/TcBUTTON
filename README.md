@@ -5,7 +5,7 @@
 - PINOUT - KEYWORD01
 <!-- Method -->
 ## Method PINOUT
-- PINOUT (SET PIN NUMBER FOR PINOUT, SET REVERSE FOR PINOUT (Default = false)) METHOD01
+- PINOUT name(SET PIN NUMBER FOR PINOUT, SET REVERSE FOR PINOUT (Default = false)) METHOD01
 - On - METHOD02 - set pinout logic 
 - Off - METHOD03 - set pinout logic
 - Toggle - METHOD04 - set pinout logic
@@ -15,8 +15,8 @@
 - BUTTON - KEYWORD02
 <!-- Method -->
 ## Method BUTTON
-- BUTTON (SET PIN NUMBER FOR BUTTON, SET REVERSE FOR BUTTON (Default = false)) METHOD06
-- IsPressed - METHOD07 return read pin true if button is pressed
+- BUTTON name(SET PIN NUMBER FOR BUTTON, SET REVERSE FOR BUTTON (Default = false)) METHOD06
+- IsPressed - METHOD07 return true if button is pressed
 <!-- Stipulation -->
 ## Stipulation
 - Use the library pinout and button for arduino digital pin only 

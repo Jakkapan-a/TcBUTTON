@@ -1,4 +1,4 @@
-#include <"PINOUT.h">
+#include <PINOUT.h>
 
 PINOUT p_1(2); // Set Digital Pin 2 is IO pin for pin 1 logic mode (false)
 PINOUT p_2(3,true); // Set Digital Pin 3 is IO pin for pin 2 reverse logic mode (true)
