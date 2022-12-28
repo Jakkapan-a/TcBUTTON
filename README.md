@@ -52,5 +52,3 @@ else led.Off(); // Turn off led if button is not pressed
 <!-- Circuit -->
 ## Circuit
 ![image](/images/01.jpg)
-## License
-Free to use and modify
