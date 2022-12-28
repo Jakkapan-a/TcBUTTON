@@ -48,5 +48,9 @@ if(button.IsPressed())led.Toggle(); // Toggle led if button is pressed
 if(button.IsPressed())led.On(); // Turn on led if button is pressed
 else led.Off(); // Turn off led if button is not pressed
 ```
+
+<!-- Circuit -->
+## Circuit
+![image](/images/01.jpg)
 ## License
 Free to use and modify
