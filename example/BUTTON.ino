@@ -3,7 +3,7 @@ BUTTON b_1(2); // Set Digital Pin 2 is IO pin for button 1 logic mode (false)
 BUTTON b_2(3,true); // Set Digital Pin 3 is IO pin for button 2 reverse logic mode (true)
 void void setup()
 {
-    
+    Serial.begin(9600); // Start serial monitor
 }
 void void loop()
 {
