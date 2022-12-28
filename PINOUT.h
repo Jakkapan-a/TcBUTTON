@@ -19,6 +19,8 @@ class PINOUT
 	 void off();
 	 void init();
    bool getState();
+   void Toggle();
+   bool IsOn();
    void setOutput(bool _state);
 };
 

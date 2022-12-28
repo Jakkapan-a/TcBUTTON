@@ -51,3 +51,18 @@ void PINOUT::setOutput(bool _state)
     off();
   }
 }
+void PINOUT::Toggle()
+{
+  if (this->statePin)
+  {
+    off();
+  } else
+  {
+    on();
+  }
+}
+
+bool PINOUT::IsOn()
+{
+  return this->statePin;
+}
