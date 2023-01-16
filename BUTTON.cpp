@@ -21,13 +21,13 @@ void BUTTON::update()
 	if (reading != this->_lastState) { // L H!=L
 		this->_lastDebounceTime = millis();
 	}
-
-	if ((millis() - this->_lastDebounceTime) > this->_debounceDelay) {
+	// Push button is pressed when LOW is read from the pin (active low)
+	if (millis() - this->_lastDebounceTime >= this->_debounceDelay) {
 		if (reading != this->_state) {
 			this->_state = reading;
 		}
 	}
- this->_lastState = reading;
+this->_lastState = reading;
 }
 
 bool BUTTON::getState() 
@@ -39,5 +39,10 @@ bool BUTTON::getState()
 
 bool BUTTON::isPressed()
 {
-	return (getState() == LOW);
+	return (getState() == LOW && this->_lastState == HIGH);
+}
+
+bool BUTTON::isReleased()
+{
+	return (getState() == HIGH && this->_lastState == LOW);
 }

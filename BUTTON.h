@@ -15,6 +15,8 @@ class BUTTON
 	 uint8_t pin;
 	 bool _state = true;
 	 bool _lastState = true;
+	 bool _lowState = false;
+	 bool _wait = true;
 	 unsigned long _lastDebounceTime = 0;
 	 unsigned long _debounceDelay = 50;
 	 bool getState();
@@ -23,6 +25,8 @@ class BUTTON
 	void update();
 	void init();
 	bool isPressed();
+	bool isReleased();
+	bool isLongPressed();
 };
 
 
