@@ -9,9 +9,10 @@ void BUTTON::init()
 	pinMode(this->pin, INPUT_PULLUP);
 	update();
 }
-BUTTON::BUTTON(uint8_t pin) 
+BUTTON::BUTTON(uint8_t pin, bool reverse = false)
 {
 	this->pin = pin;
+	this->_reverse = reverse;
 	init();
 }
 
@@ -33,6 +34,9 @@ this->_lastState = reading;
 bool BUTTON::getState() 
 {
 	update();
+	if(this->_reverse)
+		return !this->_state;
+
 	return this->_state;
 }
 
