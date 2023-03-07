@@ -42,9 +42,9 @@ BUTTON button(2, true); // Create button on pin 2 with reverse logic
 ```
 # Use 
 ```c++
-// Example 1 In loop
+// Example 1
 if(button.IsPressed())led.Toggle(); // Toggle led if button is pressed
-// Example 2 In loop
+// Example 2
 if(button.IsPressed())led.On(); // Turn on led if button is pressed
 else led.Off(); // Turn off led if button is not pressed
 ```
