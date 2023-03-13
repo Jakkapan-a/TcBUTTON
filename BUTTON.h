@@ -14,10 +14,10 @@ class BUTTON
  protected:
 	uint8_t pin;
 	bool _state = true;
-	bool _lastState = true;
+	bool _lastState = false;
 	bool _lowState = false;
 	bool _wait = false;
-	bool invert = false;
+
 	unsigned long _lastDebounceTime = 0;
 	unsigned long _debounceDelay = 50;
 	void (*onPress)();
@@ -29,6 +29,7 @@ class BUTTON
  public:
 	BUTTON(uint8_t pin, bool invert = false);
 	BUTTON(uint8_t pin, void (*press)(void), void (*release)(void));
+	bool invert = false;
 	bool getState();
 	void update();
 	void init();
