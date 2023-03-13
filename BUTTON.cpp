@@ -9,16 +9,26 @@ void BUTTON::init()
 	pinMode(this->pin, INPUT_PULLUP);
 	update();
 }
-BUTTON::BUTTON(uint8_t pin, bool reverse = false)
+BUTTON::BUTTON(uint8_t pin, bool _invert = false)
 {
 	this->pin = pin;
-	this->_reverse = reverse;
+	this->invert = _invert;
+	init();
+}
+
+BUTTON::BUTTON(uint8_t pin, void (*press)(void), void (*release)(void)){
+	this->pin = pin;
+	this->pressCallback = press;
+	this->releaseCallback = release;
 	init();
 }
 
 void BUTTON::update()
 {
 	bool reading = digitalRead(this->pin); // H
+	if(this->invert)
+		reading = !reading;
+
 	if (reading != this->_lastState) { // L H!=L
 		this->_lastDebounceTime = millis();
 	}
@@ -26,15 +36,26 @@ void BUTTON::update()
 	if (millis() - this->_lastDebounceTime >= this->_debounceDelay) {
 		if (reading != this->_state) {
 			this->_state = reading;
+
+			if (this->_state == LOW) {
+				if (this->pressCallback != NULL) {
+					this->pressCallback(); // call the function button was pressed
+				}
+			}
+			else {
+				if (this->releaseCallback != NULL) {
+					this->releaseCallback(); // call the function button was released
+				}
+			}
 		}
 	}
-this->_lastState = reading;
+	this->_lastState = reading;
 }
 
 bool BUTTON::getState() 
 {
 	update();
-	if(this->_reverse)
+	if(this->invert)
 		return !this->_state;
 
 	return this->_state;
@@ -44,9 +65,4 @@ bool BUTTON::getState()
 bool BUTTON::isPressed()
 {
 	return (getState() == LOW && this->_lastState == HIGH);
-}
-
-bool BUTTON::isReleased()
-{
-	return (getState() == HIGH && this->_lastState == LOW);
 }

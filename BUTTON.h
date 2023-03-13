@@ -12,23 +12,27 @@
 class BUTTON
 {
  protected:
-	 uint8_t pin;
-	 bool _state = true;
-	 bool _lastState = true;
-	 bool _lowState = false;
-	 bool _wait = true;
-	 bool _reverse = false;
-	 unsigned long _lastDebounceTime = 0;
-	 unsigned long _debounceDelay = 50;
+	uint8_t pin;
+	bool _state = true;
+	bool _lastState = true;
+	bool _lowState = false;
+	bool _wait = false;
+	bool invert = false;
+	unsigned long _lastDebounceTime = 0;
+	unsigned long _debounceDelay = 50;
+	void (*onPress)();
+    void (*onRelease)();
+
+	void (*pressCallback)();
+    void (*releaseCallback)();
 	
  public:
-	BUTTON(uint8_t pin, bool reverse = false);
+	BUTTON(uint8_t pin, bool invert = false);
+	BUTTON(uint8_t pin, void (*press)(void), void (*release)(void));
 	bool getState();
 	void update();
 	void init();
 	bool isPressed();
-	bool isReleased();
-	bool isLongPressed();
 };
 
 
