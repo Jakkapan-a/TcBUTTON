@@ -16,10 +16,11 @@ BUTTON::BUTTON(uint8_t pin, bool _invert = false)
 	init();
 }
 
-BUTTON::BUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void) = NULL){
+BUTTON::BUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void) = NULL, bool _invert = false){
 	this->pin = pin;
 	this->pressCallback = press;
 	this->releaseCallback = release;
+	this->invert = _invert;
 	init();
 }
 

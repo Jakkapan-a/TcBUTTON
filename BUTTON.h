@@ -28,7 +28,7 @@ class BUTTON
 	
  public:
 	BUTTON(uint8_t pin, bool invert = false);
-	BUTTON(uint8_t pin, void (*press)(void), void (*release)(void));
+	BUTTON(uint8_t pin, void (*press)(void), void (*release)(void), bool invert = false);
 	bool invert = false;
 	bool getState();
 	void update();

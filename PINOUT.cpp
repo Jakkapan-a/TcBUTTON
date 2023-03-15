@@ -23,7 +23,7 @@ void PINOUT::on()
   else {
     digitalWrite(pin, LOW);
   }
-  statePin = true;
+  this->statePin = true;
 }
 void PINOUT::off()
 {
@@ -33,7 +33,7 @@ void PINOUT::off()
   else {
     digitalWrite(pin, HIGH);
   }
-  statePin = false;
+  this->statePin = false;
 }
 
 bool PINOUT::getState()
@@ -62,7 +62,7 @@ void PINOUT::Toggle()
   }
 }
 
-bool PINOUT::IsOn()
+bool PINOUT::isOn()
 {
   return this->statePin;
 }

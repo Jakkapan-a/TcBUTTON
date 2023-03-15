@@ -20,7 +20,7 @@ class PINOUT
 	 void init();
    bool getState();
    void Toggle();
-   bool IsOn();
+   bool isOn();
    void setOutput(bool _state);
 };
 
