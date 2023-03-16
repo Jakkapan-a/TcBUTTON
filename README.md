@@ -1,27 +1,10 @@
-# PINOUT-BUTTON 1.0.5
-> A simple button and pinout class for Arduino IDE with reverse logic support and easy to use and understand for beginner.
-<!-- Keyword PINOUT -->
-## Keyword IPNOUT
-- PINOUT - KEYWORD01
-<!-- Method -->
-## Method PINOUT
-- PINOUT name(SET PIN NUMBER FOR PINOUT, SET REVERSE FOR PINOUT (Default = false)) METHOD01
-- On - METHOD02 - set pinout logic 
-- Off - METHOD03 - set pinout logic
-- Toggle - METHOD04 - set pinout logic
-- IsOn - METHOD05 - return true if pinout is on
-<!-- Keyword BUTTON -->
-## Keyword BUTTON
-- BUTTON - KEYWORD02
-<!-- Method -->
-## Method BUTTON
-- BUTTON name(PIN, SET REVERSE FOR BUTTON (Default = false))
-- BUTTON name(PIN, SET EXTERNAL FUNCTION FOR BUTTON PRESS, SET EXTERNAL FUNCTION FOR BUTTON RELEASE, SET REVERSE FOR BUTTON (Default = false))
-- IsPressed - METHOD07 return true if button is pressed
-- Update - METHOD08 - update button state
+# TcBUTTON 1.0.5
+> A library for arduino to use button and pinout with external function, reverse logic and callback function
+
 <!-- Stipulation -->
 ## Stipulation
-- Use the library pinout and button for arduino digital pin only 
+- Arduino IDE 1.8.5 or higher
+
 <!-- Use -->
 ## How to use the library
 1. Download the library
@@ -32,20 +15,32 @@
 6. run the example
 
 ## New in version 1.0.5
-- Add external function for button
+- Add Callback function
+- Add Reverse Logic
+- Add External Function
+- Add Mode Button PULLUP and PULLDOWN
+```C++
+BUTTON button(pin, callback, reverseLogic, mode,invertLogic);
+
+pin is pin button
+callback is callback function
+reverseLogic is reverse logic button
+mode is mode button PULLUP or PULLDOWN
+invertLogic is invert logic button
+```
 
 <!-- Example -->
 ## Example
 ```c++
 #include <PINOUT.h>
-#include <BUTTON.h>
+#include <TcBUTTON.h>
 // Create pinout and button
 PINOUT led(13); // Create pinout led on pin 13
 BUTTON button(2); // Create button on pin 2
-// If you want to use reverse logic
-PINOUT led(13, true); // Create pinout led on pin 13 with reverse logic
-BUTTON button(2, true); // Create button on pin 2 with reverse logic
-// Create pinout with external function
+// If you want to use invert logic
+PINOUT led(13,mode, true); // Create pinout led on pin 13 with invert logic
+BUTTON button(2,mode, true); // Create button on pin 2 with invert logic
+// Create button with callback function
 BUTTON button(2,[]
 {
   // This function will be called when button is pressed  
@@ -80,7 +75,7 @@ void ButtonReleased()
 }
 // Create button with external function
 BUTTON button(2, ButtonPressed, ButtonReleased);
-// If external function is used with reverse logic
+// Create button with reverse logic and external function
 BUTTON button(2, ButtonPressed, ButtonReleased, true);
 
 ```
@@ -98,6 +93,9 @@ void ButtonPressed()
   Serial.println("Button Pressed");
 }
 
+void loop(){
+  button.update(); // Update button
+}
 ```
 <!-- Logic -->
 ## Logic Button
@@ -108,4 +106,4 @@ void ButtonPressed()
 ## Circuit
 ![image](/images/01.jpg)
 ## License
-Free to use and modify.
+MIT License

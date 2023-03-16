@@ -1,7 +1,7 @@
-// BUTTON.h
+// TcBUTTON.h
 
-#ifndef _BUTTON_h
-#define _BUTTON_h
+#ifndef Tc_BUTTON_h
+#define Tc_BUTTON_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "arduino.h"
@@ -9,17 +9,18 @@
 	#include "WProgram.h"
 #endif
 
-class BUTTON
+class TcBUTTON
 {
  protected:
 	uint8_t pin;
 	bool _state = true;
 	bool _lastState = false;
 	bool _lowState = false;
-	bool _wait = false;
 
 	unsigned long _lastDebounceTime = 0;
 	unsigned long _debounceDelay = 50;
+
+
 	void (*onPress)();
     void (*onRelease)();
 
@@ -27,9 +28,16 @@ class BUTTON
     void (*releaseCallback)();
 	
  public:
-	BUTTON(uint8_t pin, bool invert = false);
-	BUTTON(uint8_t pin, void (*press)(void), void (*release)(void), bool invert = false);
+	enum ButtonMode 
+	{
+		PULLUP,
+		PULLDOWN
+	};
+
+	TcBUTTON(uint8_t pin, ButtonMode mode = PULLUP, int _invert = false);
+	TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void),  ButtonMode mode = PULLUP, int _invert = false);
 	bool invert = false;
+	ButtonMode _mode;
 	bool getState();
 	void update();
 	void init();

@@ -1,30 +1,34 @@
-// 
-// 
-// 
+// BUTTON.cpp
 
-#include "BUTTON.h"
+#include "TcBUTTON.h"
 
-void BUTTON::init()
+void TcBUTTON::init()
 {
-	pinMode(this->pin, INPUT_PULLUP);
+	if(this->_mode == PULLUP){
+		pinMode(this->pin, INPUT_PULLUP);
+	}else{
+		pinMode(this->pin, INPUT);
+	}
 	update();
 }
-BUTTON::BUTTON(uint8_t pin, bool _invert = false)
+TcBUTTON::TcBUTTON(uint8_t pin,ButtonMode mode = PULLUP, int _invert = false)
 {
 	this->pin = pin;
 	this->invert = _invert;
+	this->_mode = mode;
 	init();
 }
 
-BUTTON::BUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void) = NULL, bool _invert = false){
+TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void) = NULL, ButtonMode mode = PULLUP,int _invert = false){
 	this->pin = pin;
 	this->pressCallback = press;
 	this->releaseCallback = release;
+	this->_mode = mode;
 	this->invert = _invert;
 	init();
 }
 
-void BUTTON::update()
+void TcBUTTON::update()
 {
 	bool reading = digitalRead(this->pin); // H
 	if(this->invert)
@@ -53,7 +57,7 @@ void BUTTON::update()
 	this->_lastState = reading;
 }
 
-bool BUTTON::getState() 
+bool TcBUTTON::getState() 
 {
 	update();
 	if(this->invert)
@@ -63,7 +67,7 @@ bool BUTTON::getState()
 }
 
 
-bool BUTTON::isPressed()
+bool TcBUTTON::isPressed()
 {
 	return (getState() == LOW && this->_lastState == HIGH);
 }

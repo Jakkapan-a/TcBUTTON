@@ -23,6 +23,4 @@ class PINOUT
    bool isOn();
    void setOutput(bool _state);
 };
-
-
 #endif
