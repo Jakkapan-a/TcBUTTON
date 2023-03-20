@@ -1,4 +1,4 @@
-# TcBUTTON 1.0.0
+# TcBUTTON 1.0.6
 > A library for arduino to use button and pinout with external function, reverse logic and callback function
 
 <!-- Stipulation -->
@@ -19,6 +19,12 @@
 - Add Reverse Logic
 - Add External Function
 - Add Mode Button PULLUP and PULLDOWN
+
+## In version 1.0.6
+- Add Callback function in TcPINOUT
+- Add Invert Logic in TcPINOUT
+
+
 ```C++
 BUTTON button(pin, callback, reverseLogic, mode,invertLogic);
 

@@ -2,15 +2,17 @@
 #  Button class & Pinout              #
 #  by:  Jakkapan Attala               #
 #  Date:  2023-02-01                  #
-#  Version:  1.0.0                    #
+#  Version:  1.0.6                    #
 #######################################
 
 Data type(KEYWORD1) :  Button
 TcBUTTON    :   KEYWORD1
 ButtonMode  :   KEYWORD1
+TcPINOUT    :   KEYWORD1
 
 METHOD AND FUNCTION (KEYWORD2) 
 getState    : KEYWORD2
 update      : KEYWORD2
 init        : KEYWORD2
 isPressed   : KEYWORD2
+
