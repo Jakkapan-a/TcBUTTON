@@ -14,7 +14,7 @@
 5. Open the example
 6. run the example
 
-## New in version 1.0.5
+## In version 1.0.0
 - Add Callback function
 - Add Reverse Logic
 - Add External Function
