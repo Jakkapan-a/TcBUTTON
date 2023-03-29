@@ -1,11 +1,19 @@
 #include <TcBUTTON.h>
+#include <TcPINOUT.h>
 
+#define ledPin 3
+void isLED(bool);
+TcPINOUT led(ledPin, isLED);
 void setup() {
-  // put your setup code here, to run once:
-
+    Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  led.toggle();
+  delay(500);
 }
+void isLED(bool state){
+  Serial.print("LED is ");
+  Serial.println(state ? "On" : "Off");
+}
+
