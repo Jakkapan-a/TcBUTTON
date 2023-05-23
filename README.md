@@ -1,4 +1,4 @@
-# TcBUTTON 1.0.6
+# TcBUTTON 1.0.7
 > A library for arduino to use button and pinout with external function, reverse logic and callback function
 
 <!-- Stipulation -->
@@ -38,16 +38,16 @@ invertLogic is invert logic button
 <!-- Example -->
 ## Example
 ```c++
-#include <PINOUT.h>
+#include <TcPINOUT.h>
 #include <TcBUTTON.h>
 // Create pinout and button
-PINOUT led(13); // Create pinout led on pin 13
-BUTTON button(2); // Create button on pin 2
+TcPINOUT led(13); // Create pinout led on pin 13
+TcBUTTON button(2); // Create button on pin 2
 // If you want to use invert logic
-PINOUT led(13,mode, true); // Create pinout led on pin 13 with invert logic
-BUTTON button(2,mode, true); // Create button on pin 2 with invert logic
+TcPINOUT led(13,mode, true); // Create pinout led on pin 13 with invert logic
+TcBUTTON button(2,mode, true); // Create button on pin 2 with invert logic
 // Create button with callback function
-BUTTON button(2,[]
+TcBUTTON button(2,[]
 {
   // This function will be called when button is pressed  
   Serial.println("Button Pressed");
@@ -80,9 +80,9 @@ void ButtonReleased()
   Serial.println("Button Released");
 }
 // Create button with external function
-BUTTON button(2, ButtonPressed, ButtonReleased);
+TcBUTTON button(2, ButtonPressed, ButtonReleased);
 // Create button with reverse logic and external function
-BUTTON button(2, ButtonPressed, ButtonReleased, true);
+TcBUTTON button(2, ButtonPressed, ButtonReleased, true);
 
 ```
 # Use 
