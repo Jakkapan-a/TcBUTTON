@@ -58,7 +58,7 @@ TcBUTTON button(2,[]
 });
 
 // Create button with reverse logic
-BUTTON button(2,[]
+TcBUTTON button(2,[]
 {
   // This function will be called when button is pressed  
   Serial.println("Button Pressed");
