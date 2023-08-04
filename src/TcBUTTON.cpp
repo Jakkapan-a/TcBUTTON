@@ -28,6 +28,16 @@ TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void
 	init();
 }
 
+TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void),  ButtonMode mode = PULLUP, int _invert = false)
+{
+	this->pin = pin;
+	this->onEventChange = onEventChange;
+	this->pressCallback = press;
+	this->releaseCallback = release;
+	this->_mode = mode;
+	this->invert = _invert;
+	init();
+}
 void TcBUTTON::update()
 {
 	bool reading = digitalRead(this->pin); // H
@@ -51,6 +61,10 @@ void TcBUTTON::update()
 				if (this->releaseCallback != NULL) {
 					this->releaseCallback(); // call the function button was released
 				}
+			}
+
+			if (this->onEventChange != NULL) {
+				this->onEventChange(this->_state);
 			}
 		}
 	}
