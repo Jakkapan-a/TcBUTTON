@@ -25,7 +25,7 @@
 - Add Invert Logic in TcPINOUT
 
 
-## In version 1.0.7
+## In version 1.0.8
 - Add Callback function State Change in TcBUTTON
 
 ```C++
