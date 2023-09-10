@@ -14,17 +14,6 @@
 5. Open the example
 6. run the example
 
-## In version 1.0.0
-- Add Callback function
-- Add Reverse Logic
-- Add External Function
-- Add Mode Button PULLUP and PULLDOWN
-
-## In version 1.0.6
-- Add Callback function in TcPINOUT
-- Add Invert Logic in TcPINOUT
-
-
 ## In version 1.0.8
 - Add Callback function State Change in TcBUTTON
 

@@ -16,7 +16,6 @@ class TcBUTTON
 	unsigned long _lastDebounceTime = 0;
 	unsigned long _debounceDelay = 50;
 
-
 	void (*onPress)();
     void (*onRelease)();
 
@@ -24,7 +23,7 @@ class TcBUTTON
 
 	void (*pressCallback)();
     void (*releaseCallback)();
-	
+
  public:
 	enum ButtonMode 
 	{
@@ -42,6 +41,4 @@ class TcBUTTON
 	void init();
 	bool isPressed();
 };
-
-
 #endif

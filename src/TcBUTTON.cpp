@@ -74,9 +74,6 @@ void TcBUTTON::update()
 bool TcBUTTON::getState() 
 {
 	update();
-	if(this->invert)
-		return !this->_state;
-
 	return this->_state;
 }
 
