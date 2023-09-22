@@ -19,7 +19,6 @@
 - Add setOnEventChange() function in TcBUTTON
 - Add setDebounceDelay() function in TcBUTTON
 - Add setMode() function in TcBUTTON
-- Add setReverseLogic() function in TcBUTTON
 
 ## In version 1.0.8
 - Add Callback function State Change in TcBUTTON
