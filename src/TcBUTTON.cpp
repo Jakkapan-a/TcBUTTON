@@ -110,3 +110,8 @@ void TcBUTTON::setDebounceDelay(unsigned long delay)
 	this->_debounceDelay = delay;
 }
 
+void TcBUTTON::setMicros(bool isMicros)
+{
+	this->isMicros = isMicros;
+}
+

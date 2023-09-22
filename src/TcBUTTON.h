@@ -42,7 +42,7 @@ class TcBUTTON
 	void setOnRelease(void (*release)(void));
 	void setOnEventChange(void (*onEventChange)(bool));
 	void setDebounceDelay(unsigned long delay);
-
+	void setMicros(bool isMicros);
 	bool isMicros = false;
 };
 #endif

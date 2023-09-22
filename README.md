@@ -1,4 +1,4 @@
-# TcBUTTON 1.0.7
+# TcBUTTON 1.0.9
 > A library for arduino to use button and pinout with external function, reverse logic and callback function
 
 <!-- Stipulation -->
@@ -13,6 +13,13 @@
 4. Open the Arduino IDE
 5. Open the example
 6. run the example
+## In version 1.0.9
+- Add setOnPress() function in TcBUTTON
+- Add setOnRelease() function in TcBUTTON
+- Add setOnEventChange() function in TcBUTTON
+- Add setDebounceDelay() function in TcBUTTON
+- Add setMode() function in TcBUTTON
+- Add setReverseLogic() function in TcBUTTON
 
 ## In version 1.0.8
 - Add Callback function State Change in TcBUTTON
