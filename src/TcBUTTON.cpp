@@ -11,6 +11,12 @@ void TcBUTTON::init()
 	}
 	update();
 }
+TcBUTTON::TcBUTTON(uint8_t pin, int invert = false)
+{
+	this->pin = pin;
+	this->isInvert = invert;
+	init();
+}
 TcBUTTON::TcBUTTON(uint8_t pin,ButtonMode mode = PULLUP, int _invert = false)
 {
 	this->pin = pin;
