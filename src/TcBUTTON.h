@@ -18,9 +18,7 @@ class TcBUTTON
 
 	void (*onPress)();
     void (*onRelease)();
-
 	void (*onEventChange)(bool);
-
 	void (*pressCallback)();
     void (*releaseCallback)();
 
@@ -34,11 +32,17 @@ class TcBUTTON
 	TcBUTTON(uint8_t pin, ButtonMode mode = PULLUP, int _invert = false);
 	TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void),  ButtonMode mode = PULLUP, int _invert = false);
 	TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void),  ButtonMode mode = PULLUP, int _invert = false);
-	bool invert = false;
+	bool isInvert = false;
 	ButtonMode _mode;
 	bool getState();
 	void update();
 	void init();
 	bool isPressed();
+	void setOnPress(void (*press)(void));
+	void setOnRelease(void (*release)(void));
+	void setOnEventChange(void (*onEventChange)(bool));
+	void setDebounceDelay(unsigned long delay);
+	
+	bool isMicros = false;
 };
 #endif

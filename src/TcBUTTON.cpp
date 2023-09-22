@@ -14,7 +14,7 @@ void TcBUTTON::init()
 TcBUTTON::TcBUTTON(uint8_t pin,ButtonMode mode = PULLUP, int _invert = false)
 {
 	this->pin = pin;
-	this->invert = _invert;
+	this->isInvert = _invert;
 	this->_mode = mode;
 	init();
 }
@@ -24,7 +24,7 @@ TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void
 	this->pressCallback = press;
 	this->releaseCallback = release;
 	this->_mode = mode;
-	this->invert = _invert;
+	this->isInvert = _invert;
 	init();
 }
 
@@ -35,23 +35,24 @@ TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void)
 	this->pressCallback = press;
 	this->releaseCallback = release;
 	this->_mode = mode;
-	this->invert = _invert;
+	this->isInvert = _invert;
 	init();
 }
 void TcBUTTON::update()
 {
+	unsigned long currentTime = isMicros ? micros() : millis();
 	bool reading = digitalRead(this->pin); // H
-	if(this->invert)
+	if(this->isInvert)
 		reading = !reading;
 
 	if (reading != this->_lastState) { // L H!=L
-		this->_lastDebounceTime = millis();
+		// this->_lastDebounceTime = millis();
+		this->_lastDebounceTime = currentTime;
 	}
 	// Push button is pressed when LOW is read from the pin (active low)
-	if (millis() - this->_lastDebounceTime >= this->_debounceDelay) {
+	if (currentTime - this->_lastDebounceTime >= this->_debounceDelay) {
 		if (reading != this->_state) {
 			this->_state = reading;
-
 			if (this->_state == LOW) {
 				if (this->pressCallback != NULL) {
 					this->pressCallback(); // call the function button was pressed
@@ -82,3 +83,24 @@ bool TcBUTTON::isPressed()
 {
 	return (getState() == LOW && this->_lastState == HIGH);
 }
+
+void TcBUTTON::setOnPress(void (*press)(void))
+{
+	this->pressCallback = press;
+}
+
+void TcBUTTON::setOnRelease(void (*release)(void))
+{
+	this->releaseCallback = release;
+}
+
+void TcBUTTON::setOnEventChange(void (*onEventChange)(bool))
+{
+	this->onEventChange = onEventChange;
+}
+
+void TcBUTTON::setDebounceDelay(unsigned long delay)
+{
+	this->_debounceDelay = delay;
+}
+

@@ -50,7 +50,7 @@ void TcPINOUT::off()
     if(this->callback != NULL) 
     { 
       // Call the callback function
-      this->callback(false);
+    this->callback(false);
     }
 }
 

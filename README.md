@@ -38,39 +38,9 @@ TcBUTTON button(2); // Create button on pin 2
 // If you want to use invert logic
 TcPINOUT led(13,mode, true); // Create pinout led on pin 13 with invert logic
 TcBUTTON button(2,mode, true); // Create button on pin 2 with invert logic
-// Create button with callback function
-TcBUTTON button(2,[]
-{
-  // This function will be called when button is pressed  
-  Serial.println("Button Pressed");
-},[]
-{
-  // This function will be called when button is released  
-  Serial.println("Button Released");
-});
-
-// Create button with reverse logic
-TcBUTTON button(2,[]
-{
-  // This function will be called when button is pressed  
-  Serial.println("Button Pressed");
-},[]
-{
-  // This function will be called when button is released  
-  Serial.println("Button Released");
-}, true);
-
-// If want external function is used
-void ButtonPressed()
-{
-  // This function will be called when button is pressed  
-  Serial.println("Button Pressed");
-}
-void ButtonReleased()
-{
-  // This function will be called when button is released  
-  Serial.println("Button Released");
-}
+// ---------------------- Callback function ---------------------- //
+void ButtonPressed(void);
+void ButtonReleased(void);
 // Create button with external function
 TcBUTTON button(2, ButtonPressed, ButtonReleased);
 // Create button with reverse logic and external function
