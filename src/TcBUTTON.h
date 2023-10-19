@@ -29,9 +29,10 @@ class TcBUTTON
 		PULLDOWN
 	};
 	TcBUTTON(uint8_t pin, int invert = false);
-	TcBUTTON(uint8_t pin, ButtonMode mode = PULLUP, int _invert = false);
-	TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void),  ButtonMode mode = PULLUP, int _invert = false);
-	TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void),  ButtonMode mode = PULLUP, int _invert = false);
+	TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void), int _invert);
+	TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void), int _invert);
+	TcBUTTON(uint8_t pin, void (*onEventChange)(bool), int _invert);
+
 	bool isInvert = false;
 	ButtonMode _mode = PULLUP;
 	bool getState();

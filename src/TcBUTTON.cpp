@@ -17,33 +17,52 @@ TcBUTTON::TcBUTTON(uint8_t pin, int invert = false)
 	this->isInvert = invert;
 	init();
 }
-TcBUTTON::TcBUTTON(uint8_t pin,ButtonMode mode = PULLUP, int _invert = false)
-{
-	this->pin = pin;
-	this->isInvert = _invert;
-	this->_mode = mode;
-	init();
-}
 
-TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void) = NULL, ButtonMode mode = PULLUP,int _invert = false){
+TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void), int _invert = false){
 	this->pin = pin;
 	this->pressCallback = press;
 	this->releaseCallback = release;
-	this->_mode = mode;
 	this->isInvert = _invert;
 	init();
 }
 
-TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void),  ButtonMode mode = PULLUP, int _invert = false)
+TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void), int _invert = false)
 {
 	this->pin = pin;
 	this->onEventChange = onEventChange;
 	this->pressCallback = press;
 	this->releaseCallback = release;
-	this->_mode = mode;
 	this->isInvert = _invert;
 	init();
 }
+TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool),int _invert = false)
+{
+	this->pin = pin;
+	this->onEventChange = onEventChange;
+	this->isInvert = _invert;
+	init();
+}
+
+// TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void) = NULL, ButtonMode mode,int _invert = false){
+// 	this->pin = pin;
+// 	this->pressCallback = press;
+// 	this->releaseCallback = release;
+// 	this->_mode = mode;
+// 	this->isInvert = _invert;
+// 	init();
+// }
+
+// TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void),  ButtonMode mode, int _invert = false)
+// {
+// 	this->pin = pin;
+// 	this->onEventChange = onEventChange;
+// 	this->pressCallback = press;
+// 	this->releaseCallback = release;
+// 	this->_mode = mode;
+// 	this->isInvert = _invert;
+// 	init();
+// }
+
 void TcBUTTON::update()
 {
 	unsigned long currentTime = isMicros ? micros() : millis();
@@ -74,6 +93,9 @@ void TcBUTTON::update()
 				this->onEventChange(this->_state);
 			}
 		}
+	}else if(currentTime < 100) // For millis() or micros() overflow
+	{
+		this->_lastDebounceTime = currentTime;
 	}
 	this->_lastState = reading;
 }
