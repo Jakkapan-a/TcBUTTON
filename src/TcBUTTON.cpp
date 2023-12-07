@@ -11,14 +11,14 @@ void TcBUTTON::init()
 	}
 	update();
 }
-TcBUTTON::TcBUTTON(uint8_t pin, int invert = false)
+TcBUTTON::TcBUTTON(uint8_t pin, int invert)
 {
 	this->pin = pin;
 	this->isInvert = invert;
 	init();
 }
 
-TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void), int _invert = false){
+TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void), int _invert){
 	this->pin = pin;
 	this->pressCallback = press;
 	this->releaseCallback = release;
@@ -26,7 +26,7 @@ TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void), int 
 	init();
 }
 
-TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void), int _invert = false)
+TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void), int _invert)
 {
 	this->pin = pin;
 	this->onEventChange = onEventChange;
@@ -35,33 +35,13 @@ TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void)
 	this->isInvert = _invert;
 	init();
 }
-TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool),int _invert = false)
+TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool),int _invert)
 {
 	this->pin = pin;
 	this->onEventChange = onEventChange;
 	this->isInvert = _invert;
 	init();
 }
-
-// TcBUTTON::TcBUTTON(uint8_t pin, void (*press)(void) = NULL, void (*release)(void) = NULL, ButtonMode mode,int _invert = false){
-// 	this->pin = pin;
-// 	this->pressCallback = press;
-// 	this->releaseCallback = release;
-// 	this->_mode = mode;
-// 	this->isInvert = _invert;
-// 	init();
-// }
-
-// TcBUTTON::TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void),  ButtonMode mode, int _invert = false)
-// {
-// 	this->pin = pin;
-// 	this->onEventChange = onEventChange;
-// 	this->pressCallback = press;
-// 	this->releaseCallback = release;
-// 	this->_mode = mode;
-// 	this->isInvert = _invert;
-// 	init();
-// }
 
 void TcBUTTON::update()
 {
@@ -93,8 +73,7 @@ void TcBUTTON::update()
 				this->onEventChange(this->_state);
 			}
 		}
-	}else if(currentTime < 100) // For millis() or micros() overflow
-	{
+	}else if(currentTime < this->_lastDebounceTime){ // overflow
 		this->_lastDebounceTime = currentTime;
 	}
 	this->_lastState = reading;

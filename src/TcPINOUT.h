@@ -9,10 +9,14 @@ protected:
     bool statePin;
     bool invert;
  	void (*callback)(bool);
+    unsigned long _lastDebounceTime = 0;
+    int _ms = 0;
 public:
     TcPINOUT(uint8_t pin, bool invert = false);
 	TcPINOUT(uint8_t pin,void (*_callback)(bool) , bool invert = false);
     void on();
+    void on(int ms);
+    void update();
     void off();
     void init();
     bool getState();

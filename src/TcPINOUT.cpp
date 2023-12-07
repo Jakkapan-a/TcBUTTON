@@ -86,3 +86,18 @@ void TcPINOUT::setCallback(void (*_callback)(bool))
 {
     this->callback = _callback;
 }
+void TcPINOUT::on(int ms)
+{
+    on();
+    this->_ms = ms;
+    this->_lastDebounceTime = millis();
+}
+void TcPINOUT::update()
+{
+    if (this->_ms > 0) {
+        if (millis() - this->_lastDebounceTime > this->_ms) {
+            off();
+            this->_ms = 0;
+        }
+    }
+}
