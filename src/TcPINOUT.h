@@ -10,7 +10,7 @@ protected:
     bool invert;
  	void (*callback)(bool);
     unsigned long _lastDebounceTime = 0;
-    int _ms = 0;
+    unsigned long _ms = 0;
 public:
     TcPINOUT(uint8_t pin, bool invert = false);
 	TcPINOUT(uint8_t pin,void (*_callback)(bool) , bool invert = false);

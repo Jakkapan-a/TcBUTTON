@@ -6,14 +6,14 @@ void TcPINOUT::init()
     off();
 }
 
-TcPINOUT::TcPINOUT(uint8_t pin, bool _invert = false)
+TcPINOUT::TcPINOUT(uint8_t pin, bool _invert)
 {
     this->pin = pin;
     this->invert = _invert;
     init();
 }
 
-TcPINOUT::TcPINOUT(uint8_t pin,void (*_callback)(bool), bool _invert = false)
+TcPINOUT::TcPINOUT(uint8_t pin,void (*_callback)(bool), bool _invert)
 {
     this->pin = pin;
     this->invert = _invert;
@@ -98,6 +98,8 @@ void TcPINOUT::update()
         if (millis() - this->_lastDebounceTime > this->_ms) {
             off();
             this->_ms = 0;
+        }else if(millis() < this->_lastDebounceTime){
+            this->_lastDebounceTime = millis();
         }
     }
 }

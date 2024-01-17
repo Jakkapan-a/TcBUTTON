@@ -2,7 +2,7 @@
 #  Button class & Pinout              #
 #  by:  Jakkapan Attala               #
 #  Date:  2023-02-01                  #
-#  Version:  1.0.6                    #
+#  Version:  1.0.10                   #
 #######################################
 
 Data type(KEYWORD1) :  Button
@@ -15,4 +15,6 @@ getState    : KEYWORD2
 update      : KEYWORD2
 init        : KEYWORD2
 isPressed   : KEYWORD2
-
+OnPress    : KEYWORD2
+OnRelease   : KEYWORD2
+OnEventChange : KEYWORD2

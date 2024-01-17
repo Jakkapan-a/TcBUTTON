@@ -91,27 +91,27 @@ bool TcBUTTON::isPressed()
 	return (getState() == LOW && this->_lastState == HIGH);
 }
 
-void TcBUTTON::setOnPress(void (*press)(void))
+void TcBUTTON::OnPress(void (*press)(void))
 {
 	this->pressCallback = press;
 }
 
-void TcBUTTON::setOnRelease(void (*release)(void))
+void TcBUTTON::OnRelease(void (*release)(void))
 {
 	this->releaseCallback = release;
 }
 
-void TcBUTTON::setOnEventChange(void (*onEventChange)(bool))
+void TcBUTTON::OnEventChange(void (*onEventChange)(bool))
 {
 	this->onEventChange = onEventChange;
 }
 
-void TcBUTTON::setDebounceDelay(unsigned long delay)
+void TcBUTTON::DebounceDelay(unsigned long delay)
 {
 	this->_debounceDelay = delay;
 }
 
-void TcBUTTON::setMicros(bool isMicros)
+void TcBUTTON::Micros(bool isMicros)
 {
 	this->isMicros = isMicros;
 }

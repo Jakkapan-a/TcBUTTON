@@ -29,9 +29,9 @@ class TcBUTTON
 		PULLDOWN
 	};
 	TcBUTTON(uint8_t pin, int invert = false);
-	TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void), int _invert = false);
-	TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void), int _invert = false);
-	TcBUTTON(uint8_t pin, void (*onEventChange)(bool),int _invert = false);
+	TcBUTTON(uint8_t pin, void (*press)(void), void (*release)(void), int _invert);
+	TcBUTTON(uint8_t pin, void (*onEventChange)(bool), void (*press)(void), void (*release)(void), int _invert);
+	TcBUTTON(uint8_t pin, void (*onEventChange)(bool),int _invert);
 
 	bool isInvert = false;
 	ButtonMode _mode = PULLUP;
@@ -39,11 +39,11 @@ class TcBUTTON
 	void update();
 	void init();
 	bool isPressed();
-	void setOnPress(void (*press)(void));
-	void setOnRelease(void (*release)(void));
-	void setOnEventChange(void (*onEventChange)(bool));
-	void setDebounceDelay(unsigned long delay);
-	void setMicros(bool isMicros);
+	void OnPress(void (*press)(void));
+	void OnRelease(void (*release)(void));
+	void OnEventChange(void (*onEventChange)(bool));
+	void DebounceDelay(unsigned long delay);
+	void Micros(bool isMicros);
 	bool isMicros = false;
 };
 #endif
