@@ -30,10 +30,11 @@ void TcPINOUT::on()
     // Set state to true
     this->statePin = true;
     // Check if callback is set and call it
-    if(this->callback != NULL) 
+    if(this->callback != NULL && this->oldStatePin != this->statePin) 
     { 
+       this->oldStatePin = this->statePin;
       // Call the callback function
-      this->callback(true);
+      this->callback(this->statePin);
     }
 }
 
@@ -47,10 +48,11 @@ void TcPINOUT::off()
     // Set the state to false
     this->statePin = false;
     // Check if callback is set and call it
-    if(this->callback != NULL) 
+    if(this->callback != NULL && this->oldStatePin != this->statePin) 
     { 
+        this->oldStatePin = this->statePin;
       // Call the callback function
-    this->callback(false);
+    this->callback(this->statePin);
     }
 }
 

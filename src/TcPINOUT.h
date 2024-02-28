@@ -6,7 +6,9 @@ class TcPINOUT
 {
 protected:
     uint8_t pin;
-    bool statePin;
+    bool statePin = false;
+    bool oldStatePin = false;
+
     bool invert;
  	void (*callback)(bool);
     unsigned long _lastDebounceTime = 0;
