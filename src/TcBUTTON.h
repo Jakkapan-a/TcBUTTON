@@ -13,8 +13,8 @@ class TcBUTTON
 	bool _lastState = false;
 	bool _lowState = false;
 
-	unsigned long _lastDebounceTime = 0;
-	unsigned long _debounceDelay = 50;
+	uint32_t _lastDebounceTime = 0;
+	uint16_t _debounceDelay = 50;
 
 	void (*onPress)();
     void (*onRelease)();
