@@ -13,7 +13,7 @@ TcPINOUT::TcPINOUT(uint8_t pin, bool _invert)
     init();
 }
 
-TcPINOUT::TcPINOUT(uint8_t pin,void (*_callback)(bool), bool _invert)
+TcPINOUT::TcPINOUT(uint8_t pin, void (*_callback)(bool), bool _invert)
 {
     this->pin = pin;
     this->invert = _invert;
@@ -22,37 +22,43 @@ TcPINOUT::TcPINOUT(uint8_t pin,void (*_callback)(bool), bool _invert)
 }
 void TcPINOUT::on()
 {
-    if (this->invert) {
+    if (this->invert)
+    {
         digitalWrite(pin, LOW);
-    } else {
+    }
+    else
+    {
         digitalWrite(pin, HIGH);
     }
     // Set state to true
     this->statePin = true;
     // Check if callback is set and call it
-    if(this->callback != NULL && this->oldStatePin != this->statePin) 
-    { 
-       this->oldStatePin = this->statePin;
-      // Call the callback function
-      this->callback(this->statePin);
+    if (this->callback != NULL && this->oldStatePin != this->statePin)
+    {
+        this->oldStatePin = this->statePin;
+        // Call the callback function
+        this->callback(this->statePin);
     }
 }
 
 void TcPINOUT::off()
 {
-    if (this->invert) {
+    if (this->invert)
+    {
         digitalWrite(pin, HIGH);
-    } else {
+    }
+    else
+    {
         digitalWrite(pin, LOW);
     }
     // Set the state to false
     this->statePin = false;
     // Check if callback is set and call it
-    if(this->callback != NULL && this->oldStatePin != this->statePin) 
-    { 
+    if (this->callback != NULL && this->oldStatePin != this->statePin)
+    {
         this->oldStatePin = this->statePin;
-      // Call the callback function
-    this->callback(this->statePin);
+        // Call the callback function
+        this->callback(this->statePin);
     }
 }
 
@@ -63,18 +69,24 @@ bool TcPINOUT::getState()
 
 void TcPINOUT::setOutput(bool _state)
 {
-    if (_state) {
+    if (_state)
+    {
         on();
-    } else {
+    }
+    else
+    {
         off();
     }
 }
 
 void TcPINOUT::toggle()
 {
-    if (this->statePin) {
+    if (this->statePin)
+    {
         off();
-    } else {
+    }
+    else
+    {
         on();
     }
 }
@@ -96,12 +108,47 @@ void TcPINOUT::on(int ms)
 }
 void TcPINOUT::update()
 {
-    if (this->_ms > 0) {
-        if (millis() - this->_lastDebounceTime > this->_ms) {
+    if (this->_ms > 0)
+    {
+        if (millis() - this->_lastDebounceTime > this->_ms)
+        {
             off();
-            this->_ms = 0;
-        }else if(millis() < this->_lastDebounceTime){
+            if (this->_toggleCount == 0)
+            {
+                this->_ms = 0;
+            }
+        }
+        else if (millis() < this->_lastDebounceTime)
+        {
             this->_lastDebounceTime = millis();
         }
     }
+
+    if (this->_toggleCount > 0)
+    {
+        if (millis() - this->_lastDebounceTime > this->_ms * 2)
+        {
+            this->on(this->_ms);
+            this->_toggleCount--;
+            this->_lastDebounceTime = millis();
+        }
+    }
+}
+
+void TcPINOUT::onToggle(uint8_t toggleCount, int ms)
+{
+    this->_toggleCount = toggleCount;
+    this->_ms = ms;
+}
+
+void TcPINOUT::noToggle()
+{
+    this->_toggleCount = 0;
+    this->_ms = 0;
+    this->off();
+}
+
+uint8_t TcPINOUT::getToggleCount()
+{
+    return this->_toggleCount;
 }

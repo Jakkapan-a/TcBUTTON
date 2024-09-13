@@ -11,8 +11,10 @@ protected:
 
     bool invert;
  	void (*callback)(bool);
-    unsigned long _lastDebounceTime = 0;
-    unsigned long _ms = 0;
+    uint32_t _lastDebounceTime = 0;
+    uint16_t _ms = 0;
+
+    uint8_t _toggleCount = 0;
 public:
     TcPINOUT(uint8_t pin, bool invert = false);
 	TcPINOUT(uint8_t pin,void (*_callback)(bool) , bool invert = false);
@@ -23,6 +25,9 @@ public:
     void init();
     bool getState();
     void toggle();
+    void onToggle(uint8_t toggleCount, int ms);
+    void noToggle();
+    uint8_t getToggleCount();
     bool isOn();
     void setOutput(bool _state);
 	void setCallback(void (*callback)(bool));
