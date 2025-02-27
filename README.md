@@ -11,18 +11,7 @@
 2. Unzip the library
 3. Copy the folder to your Arduino libraries folder
 4. Open the Arduino IDE
-5. Open the example
-6. run the example
-## In version 1.0.9
-- Add setOnPress() function in TcBUTTON
-- Add setOnRelease() function in TcBUTTON
-- Add setOnEventChange() function in TcBUTTON
-- Add setDebounceDelay() function in TcBUTTON
-- Add setMode() function in TcBUTTON
-
-## In version 1.0.8
-- Add Callback function State Change in TcBUTTON
-
+5. Go to File > Examples > TcBUTTON > Button
 ```C++
 BUTTON button(pin, callback, reverseLogic, mode,invertLogic);
 
@@ -36,21 +25,22 @@ invertLogic is invert logic button
 <!-- Example -->
 ## Example
 ```c++
-#include <TcPINOUT.h>
 #include <TcBUTTON.h>
-// Create pinout and button
-TcPINOUT led(13); // Create pinout led on pin 13
-TcBUTTON button(2); // Create button on pin 2
-// If you want to use invert logic
-TcPINOUT led(13,mode, true); // Create pinout led on pin 13 with invert logic
-TcBUTTON button(2,mode, true); // Create button on pin 2 with invert logic
-// ---------------------- Callback function ---------------------- //
-void ButtonPressed(void);
-void ButtonReleased(void);
-// Create button with external function
-TcBUTTON button(2, ButtonPressed, ButtonReleased);
-// Create button with reverse logic and external function
-TcBUTTON button(2, ButtonPressed, ButtonReleased, true);
+
+void buttonPressed() {
+    Serial.println("Button Pressed!");
+}
+
+BUTTON myButton(2, buttonPressed, true, PULLUP, false); // reverseLogic = true
+
+void setup() {
+    Serial.begin(9600);
+    myButton.begin();
+}
+
+void loop() {
+    myButton.update();
+}
 
 ```
 # Use 
