@@ -98,3 +98,6 @@ Feel free to submit issues or pull requests on the [GitHub repository](https://g
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/Jakkapan-a/TcBUTTON) file for details.
+
+## Circuit Diagram
+![Circuit Diagram](./images/01.jpg)
