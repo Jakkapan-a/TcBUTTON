@@ -30,12 +30,28 @@ void TcBUTTON::update()
         _lastDebounceTime = currentTime;
     }
 
+    // If the button state has changed or the debounce time has passed or overflow
     if ((currentTime - _lastDebounceTime) >= _debounceDelay || currentTime < _lastDebounceTime) {
         if (reading != _currentState) {
             _currentState = reading;
-            if (_currentState == LOW && pressCallback) pressCallback();
-            else if (_currentState == HIGH && releaseCallback) releaseCallback();
+            if (_currentState == LOW){
+                if(pressCallback) pressCallback();
+                _pressStartTime = currentTime;
+                _holdTriggered = false;
+            }
+            else if (_currentState == HIGH){
+                if(releaseCallback) releaseCallback();
+                _pressStartTime = 0;
+                _holdTriggered = false;
+            }
             if (onEventChange) onEventChange(_currentState);
+        }
+    }
+
+    if (_currentState == LOW && _pressStartTime > 0 && !_holdTriggered) {
+        if ((currentTime - _pressStartTime >= _holdTime) || (currentTime < _pressStartTime)) {
+            if (holdCallback) holdCallback();
+            _holdTriggered = true;
         }
     }
     _previousState = reading;
@@ -57,3 +73,5 @@ void TcBUTTON::setOnRelease(void (*release)()) { releaseCallback = release; }
 void TcBUTTON::setOnEventChange(void (*onEventChange)(bool)) { this->onEventChange = onEventChange; }
 void TcBUTTON::setDebounceDelay(uint16_t delay) { _debounceDelay = delay; }
 void TcBUTTON::useMicros(bool isMicros) { _useMicros = isMicros; }
+bool TcBUTTON::isHeld() { return _holdTriggered; }
+void TcBUTTON::setOnHold(void (*hold)(), uint16_t holdTime) { holdCallback = hold; _holdTime = holdTime; }

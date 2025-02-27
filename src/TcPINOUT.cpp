@@ -1,154 +1,92 @@
 #include "TcPINOUT.h"
 
-void TcPINOUT::init()
-{
+TcPINOUT::TcPINOUT(uint8_t pin, void (*callback)(bool), bool invert) {
+    this->pin = pin;
+    this->_callback = callback;
+    this->_invert = invert;
+    begin();
+}
+
+void TcPINOUT::begin() {
     pinMode(pin, OUTPUT);
+    off(); // Default to OFF state
+}
+
+void TcPINOUT::on() {
+    digitalWrite(pin, _invert ? LOW : HIGH);
+    _state = true;
+    if (_callback && _state != _previousState) {
+        _previousState = _state;
+        _callback(_state);
+    }
+}
+
+void TcPINOUT::off() {
+    digitalWrite(pin, _invert ? HIGH : LOW);
+    _state = false;
+    if (_callback && _state != _previousState) {
+        _previousState = _state;
+        _callback(_state);
+    }
+}
+
+void TcPINOUT::toggle() {
+    setState(!_state);
+}
+
+void TcPINOUT::setState(bool state) {
+    if (state) on();
+    else off();
+}
+
+bool TcPINOUT::getState() {
+    return _state;
+}
+
+bool TcPINOUT::isOn() {
+    return _state;
+}
+
+void TcPINOUT::onFor(uint16_t ms) {
+    on();
+    _duration = ms;
+    _lastTime = millis();
+    _toggleCount = 0; // Disable toggling
+}
+
+void TcPINOUT::toggleFor(uint8_t count, uint16_t ms) {
+    _toggleCount = count;
+    _duration = ms;
+    on(); // Start with ON
+    _lastTime = millis();
+}
+
+void TcPINOUT::stopToggle() {
+    _toggleCount = 0;
+    _duration = 0;
     off();
 }
 
-TcPINOUT::TcPINOUT(uint8_t pin, bool _invert)
-{
-    this->pin = pin;
-    this->invert = _invert;
-    init();
+uint8_t TcPINOUT::getToggleCount() {
+    return _toggleCount;
 }
 
-TcPINOUT::TcPINOUT(uint8_t pin, void (*_callback)(bool), bool _invert)
-{
-    this->pin = pin;
-    this->invert = _invert;
-    this->callback = _callback;
-    init();
-}
-void TcPINOUT::on()
-{
-    if (this->invert)
-    {
-        digitalWrite(pin, LOW);
-    }
-    else
-    {
-        digitalWrite(pin, HIGH);
-    }
-    // Set state to true
-    this->statePin = true;
-    // Check if callback is set and call it
-    if (this->callback != NULL && this->oldStatePin != this->statePin)
-    {
-        this->oldStatePin = this->statePin;
-        // Call the callback function
-        this->callback(this->statePin);
-    }
-}
+void TcPINOUT::update() {
+    if (_duration == 0) return; // No timed operation active
 
-void TcPINOUT::off()
-{
-    if (this->invert)
-    {
-        digitalWrite(pin, HIGH);
-    }
-    else
-    {
-        digitalWrite(pin, LOW);
-    }
-    // Set the state to false
-    this->statePin = false;
-    // Check if callback is set and call it
-    if (this->callback != NULL && this->oldStatePin != this->statePin)
-    {
-        this->oldStatePin = this->statePin;
-        // Call the callback function
-        this->callback(this->statePin);
-    }
-}
-
-bool TcPINOUT::getState()
-{
-    return this->statePin;
-}
-
-void TcPINOUT::setOutput(bool _state)
-{
-    if (_state)
-    {
-        on();
-    }
-    else
-    {
-        off();
-    }
-}
-
-void TcPINOUT::toggle()
-{
-    if (this->statePin)
-    {
-        off();
-    }
-    else
-    {
-        on();
-    }
-}
-
-bool TcPINOUT::isOn()
-{
-    return this->statePin;
-}
-
-void TcPINOUT::setCallback(void (*_callback)(bool))
-{
-    this->callback = _callback;
-}
-void TcPINOUT::on(int ms)
-{
-    on();
-    this->_ms = ms;
-    this->_lastDebounceTime = millis();
-}
-void TcPINOUT::update()
-{
-    if (this->_ms > 0)
-    {
-        if (millis() - this->_lastDebounceTime > this->_ms)
-        {
+    unsigned long currentTime = millis();
+    if ((currentTime - _lastTime >= _duration) || (currentTime < _lastTime)) {
+        if (_toggleCount > 0) {
+            toggle();
+            _lastTime = currentTime;
+            if (_state) _toggleCount--; // Decrease count only after ON cycle
+        } else {
             off();
-            if (this->_toggleCount == 0)
-            {
-                this->_ms = 0;
-            }
-        }
-        else if (millis() < this->_lastDebounceTime)
-        {
-            this->_lastDebounceTime = millis();
-        }
-    }
-
-    if (this->_toggleCount > 0)
-    {
-        if (millis() - this->_lastDebounceTime > this->_ms * 2)
-        {
-            this->on(this->_ms);
-            this->_toggleCount--;
-            this->_lastDebounceTime = millis();
+            _duration = 0; // Stop timed operation
         }
     }
 }
 
-void TcPINOUT::onToggle(uint8_t toggleCount, int ms)
-{
-    this->_toggleCount = toggleCount;
-    this->_ms = ms;
-}
-
-void TcPINOUT::noToggle()
-{
-    this->_toggleCount = 0;
-    this->_ms = 0;
-    this->off();
-}
-
-uint8_t TcPINOUT::getToggleCount()
-{
-    return this->_toggleCount;
+void TcPINOUT::setCallback(void (*callback)(bool)) {
+    this->_callback = callback;
 }
