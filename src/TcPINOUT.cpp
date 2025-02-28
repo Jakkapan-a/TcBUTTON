@@ -55,7 +55,7 @@ void TcPINOUT::onFor(uint16_t ms) {
 }
 
 void TcPINOUT::toggleFor(uint8_t count, uint16_t ms) {
-    _toggleCount = count;
+    _toggleCount = count - 1; // Number of toggles remaining
     _duration = ms;
     on(); // Start with ON
     _lastTime = millis();
