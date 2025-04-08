@@ -57,8 +57,12 @@ void TcPINOUT::onFor(uint16_t ms) {
 void TcPINOUT::toggleFor(uint8_t count, uint16_t ms) {
     _toggleCount = count - 1; // Number of toggles remaining
     _duration = ms;
-    on(); // Start with ON
-    _lastTime = millis();
+    // _lastTime = millis();
+    unsigned long currentTime = millis();
+    if (currentTime - _lastTime > _duration){
+        on(); // Start with ON state
+        _lastTime = currentTime; // Handle overflow
+    }
 }
 
 void TcPINOUT::stopToggle() {
@@ -73,17 +77,20 @@ uint8_t TcPINOUT::getToggleCount() {
 
 void TcPINOUT::update() {
     if (_duration == 0) return; // No timed operation active
-
     unsigned long currentTime = millis();
     if ((currentTime - _lastTime >= _duration) || (currentTime < _lastTime)) {
         if (_toggleCount > 0) {
             toggle();
-            _lastTime = currentTime;
-            if (_state) _toggleCount--; // Decrease count only after ON cycle
+            _lastTime = currentTime; // Handle overflow
+            if (_state){
+                _toggleCount--;
+            }; // Decrease count only after ON cycle
         } else {
             off();
             _duration = 0; // Stop timed operation
         }
+    }else if(currentTime < _lastTime){
+        _lastTime = currentTime; // Handle overflow
     }
 }
 

@@ -28,7 +28,7 @@ public:
     bool isOn();                 // Check if pin is ON
 
     void onFor(uint16_t ms);     // Turn ON for a specific duration
-    void toggleFor(uint8_t count, uint16_t ms); // Toggle for a number of times
+    void toggleFor(uint8_t count, uint16_t ms = 100); // Toggle for a number of times
     void stopToggle();           // Stop toggling and turn OFF
     uint8_t getToggleCount();    // Get remaining toggle count
     void update();               // Update timed operations
